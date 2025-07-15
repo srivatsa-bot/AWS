@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CORS Test</title>
+</head>
+<body>
+  <h1>Testing CORS</h1>
+  <button onclick="fetchFromS3()">Fetch from S3</button>
+
+  <script>
+    function fetchFromS3() {
+      fetch('http://cors-3825.s3-website.ap-south-1.amazonaws.com/data.json')
+        .then(response => response.json())
+        .then(data => console.log('Success:', data))
+        .catch(error => console.error('CORS Error:', error));
+    }
+  </script>
+</body>
+</html>

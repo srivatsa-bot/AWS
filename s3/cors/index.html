@@ -1,0 +1,56 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+  <title>CORS Demo</title>
+  <script src="http://cors2-3825.s3-website.ap-south-1.amazonaws.com/hello.js"></script>
+</head>
+<body>
+  <h2>CORS JS Demo</h2>
+</body>
+</html> -->
+
+
+<!-- cors will not allow webiste js from accrss the resource not the browser itself. so fetch some hello.js in doffwerent orgin browser will frtch it and execute it in browser , because we are not trying to access that .js file in our website code. Browser will block if we use fetch and manupukate the .js in html -->
+ <!-- so if you webiste js try to manuplate resource from diffrent orjin , web browser will only allow it if only the resouce response header access conmtrol "allow-orgin" specifies so.... -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CORS Test - Fetch Edition</title>
+</head>
+<body>
+    <h1>CORS Test Page - Fetch Edition</h1>
+    <p>Checking if hello.js can be fetched...</p>
+    <div id="result"></div>
+
+    <script>
+        //s3 static hosting
+        const helloJsUrl = "http://cors2-3825.s3-website.ap-south-1.amazonaws.com/hello.js";
+        //s3 object url
+        // const helloJsUrl = "http://cors2-3825.s3-website.ap-south-1.amazonaws.com/hello.js";
+
+        fetch(helloJsUrl)
+            .then(response => {
+                // This 'then' block will only be reached if CORS allows the read.
+                // If CORS blocks, the promise will reject with a TypeError.
+                console.log("Fetch response received:", response);
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(text => {
+                document.getElementById('result').innerText = "Successfully fetched hello.js content:\n" + text;
+                console.log("hello.js content:", text);
+            })
+            .catch(error => {
+                document.getElementById('result').innerText = "CORS ERROR: Failed to fetch hello.js. Check console.";
+                console.error("CORS Error caught:", error);
+            });
+
+        console.log("Index page script executed.");
+    </script>
+</body>
+</html>

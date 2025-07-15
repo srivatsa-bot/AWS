@@ -1,0 +1,91 @@
+# #!/bin/bash
+
+# # name="srivatsa"
+# # count=20
+
+# # ((count+=20))
+
+# # echo $count
+
+
+# # Files="*"
+
+# #prompting user input
+# echo "ebter name"
+# # read name
+
+# # echo "hello, $name"
+
+# #taking user input inline
+# read "Age: " age
+# echo "You are $age years old."
+
+# if conditions
+# age=21
+
+# if [ $age -eq 20 ]; then
+#     echo "ADULT"
+# else 
+#     echo "MINOR"
+# fi
+
+
+# anything in loop keep betwenn do-done
+# for i in 1 2 3 4 5
+# do
+# echo "number is $i"
+# done
+
+# count=1
+# while [ $count -le 10 ]
+# do
+#     echo "$count"
+#     ((count++))
+# done
+
+# for ((i=0;i<11;i++))
+# do
+#     echo "$i"
+# done
+
+# for file in *
+# do 
+#     echo "$file"
+# done
+
+#functions 
+
+# greet(){
+#     ans=$(($1+$2))
+#     echo "$ans"
+# }
+# greet 3 5
+
+# name=$1
+
+# echo "$name"
+
+
+
+# x=5
+# y=3
+# sum=$((x + y)) #use $in fromt 
+
+
+# pgm to find if number is odd or evne
+
+
+# chk(){
+#     if (($1%2==0)); then
+#         echo "even"
+#     else
+#         echo "odd"
+#     fi
+# }
+
+# chk $1
+
+
+# [[ ]]	String comparison, safer	[[ $a == "Jazz" ]]
+# [ ]	Basic condition check	[ $a = "Jazz" ]
+# (( ))	Arithmetic only	(( a > 10 ))

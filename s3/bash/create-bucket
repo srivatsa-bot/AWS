@@ -1,0 +1,10 @@
+#!/bin/bash
+# if [ $# -eq 0 ]; then
+
+echo "Creating bucket"
+
+if [[ -z "$1" ]];then
+    echo "Provide name of the bucker eg-./.sh bucket_name"
+    exit 1
+fi
+aws s3api create-bucket --bucket "$1" --create-bucket-configuration LocationConstraint=ap-south-1

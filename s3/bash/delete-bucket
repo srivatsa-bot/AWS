@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+
+if [[ -z "$1" ]]; then
+    echo "Enter bucket name"
+    exit 1
+else
+    echo "Deleting bucket"
+fi
+
+aws s3api delete-bucket --bucket "$1" --output json
