@@ -35,8 +35,13 @@ aws ec2 create-route --route-table-id rtb-0458f61012ca6e596 --destination-cidr-b
 ```
 
 #turn ondns hostname so instances inside vpc can have public dns
+#enable dns hostname
 ```sh
 aws ec2 modify-vpc-attribute --vpc-id vpc-06990a161551220ea --enable-dns-hostnames
+```
+#enable dns resolution
+```sh 
+aws ec2 modify-vpc-attribute --vpc-id <your-vpc-id> --enable-dns-support
 ```
 
 
@@ -45,7 +50,13 @@ aws ec2 modify-vpc-attribute --vpc-id vpc-06990a161551220ea --enable-dns-hostnam
 aws ec2 describe-vpcs
 ```
 
-#delete vpc
-```sh 
+#to run this script turn off aws cli auto prompt
+```sh
+export AWS_CLI_AUTO_PROMPT=off
+```
 
+#note by default this will create a private subnet if you want to make it public use this 
+
+```sh
+aws ec2 modify-subnet-attribute --subnet-id "$subID" --map-public-ip-on-launch
 ```
