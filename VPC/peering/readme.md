@@ -27,3 +27,8 @@ aws ec2 create-route --route-table-id rtb-0a18f24cba1704dda --destination-cidr-b
 #now you can ping each vpc
 
 ![proof](11.png)
+
+#delete the perring then only you can delete those vpcs
+```sh
+aws ec2 delete-vpc-peering-connection --vpc-peering-connection-id pcx-0062e14789fe9fe0f
+```
