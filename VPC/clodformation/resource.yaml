@@ -1,0 +1,99 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Creating VPC using templates
+Resources:
+  MyVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: "10.2.0.0/16"
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      Tags: 
+        - Key: Name
+          Value: TemplateVpc
+
+  Myigw:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags: 
+        - Key: Name
+          Value: TempIGW
+
+  AttachIGW:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      InternetGatewayId: !Ref Myigw
+      VpcId: !Ref MyVPC
+
+  Routetbl: 
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref MyVPC
+      Tags: 
+        - Key: Name
+          Value: tempRoute
+
+  Mysubnet:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref MyVPC
+      CidrBlock: "10.2.0.0/18"
+      MapPublicIpOnLaunch: true
+      Tags: 
+        - Key: Name
+          Value: TempSub
+
+  SubnetRouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId: !Ref Routetbl
+      SubnetId: !Ref Mysubnet
+
+  MyRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref Routetbl
+      DestinationCidrBlock: "0.0.0.0/0"
+      GatewayId: !Ref Myigw
+
+  MyNACL:
+    Type: AWS::EC2::NetworkAcl
+    Properties:
+      Tags: 
+        - Key: Name
+          Value: tempAcl
+      VpcId: !Ref MyVPC
+
+  #asociate nacl
+  MyNACLSubnetAssociation:
+    Type: AWS::EC2::SubnetNetworkAclAssociation
+    Properties:
+      SubnetId: !Ref Mysubnet
+      NetworkAclId: !Ref MyNACL
+  
+  MyNACLInboundRule:
+    Type: AWS::EC2::NetworkAclEntry
+    Properties:
+      CidrBlock: "0.0.0.0/0"
+      Egress: true #if egress is false then itis inbound ruules
+      NetworkAclId: !Ref MyNACL
+      PortRange: 
+        From: 22
+        To: 22
+      Protocol: 6 #all protocols
+      RuleAction: allow
+      RuleNumber: 200
+
+  MyNACLInboundRule2:
+    Type: AWS::EC2::NetworkAclEntry
+    Properties:
+      CidrBlock: "0.0.0.0/0"
+      Egress: false #if egress is false then itis inbound ruules
+      NetworkAclId: !Ref MyNACL
+      PortRange: 
+        From: 22
+        To: 22
+      Protocol: 6 # -1 all protocols, 6 tcp
+      RuleAction: deny
+      RuleNumber: 200
+
