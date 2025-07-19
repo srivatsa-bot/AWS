@@ -41,3 +41,10 @@ aws ec2 modify-vpc-attribute --vpc-id "$vpcID" --enable-dns-hostnames
 echo "enabled vpc hostname for vpc"
 
 echo "vpc created sucesfully"
+
+
+echo "To dlete the vpc use this command with the scriptS"
+echo "./deletevpc.sh $igwID $subID $routeID $vpcID"
+
+
+aws ec2 describe-route-tables --route-table-ids rtb-0b9c00811501d8c03 --query "RouteTables[0].Associations[?SubnetId=='subnet-0c1b758b1d34e7224'].RouteTableAssociationId" --output text
